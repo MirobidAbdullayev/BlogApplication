@@ -26,6 +26,17 @@ class LoginView(APIView):
                 response['message'] = 'invalid username, user not found'
                 raise Exception('invalid username not found')
 
+            user_obj = authenticate(username = data.get('username'), password = data.get('password'))
+
+            if user_obj:
+                response['status'] = 200
+                response['message'] = 'Welcome'
+            else:
+                response['message'] = 'invalid password'
+                raise Exception('invalid password')
+
         except Exception as e :
             print(e)
         return Response(response)
+
+    LoginView = LoginView.as_view()
