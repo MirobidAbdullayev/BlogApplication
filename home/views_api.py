@@ -60,19 +60,18 @@ class RegisterView(APIView):
 
                 check_user = User.objects.filter(username=data.get('username')).first()
 
-                if check_user is None:
-                    response['message'] = 'invalid username, user not found'
-                    raise Exception('invalid username not found')
+                if check_user:
+                    response['message'] = 'username already taken'
+                    raise Exception('username already taken')
 
-                user_obj = authenticate(username=data.get('username'), password=data.get('password'))
-
-                if user_obj:
-                    response['status'] = 200
-                    response['message'] = 'Welcome'
-                else:
-                    response['message'] = 'invalid password'
-                    raise Exception('invalid password')
+                user_obj = User.objects.create(username = data.get('username'))
+                user_obj.set_password(data.get('password'))
+                user_obj.save()
+                response['message'] = 'User created'
+                response['status'] = 200
 
             except Exception as e:
                 print(e)
             return Response(response)
+
+RegisterView = RegisterView.as_view()
