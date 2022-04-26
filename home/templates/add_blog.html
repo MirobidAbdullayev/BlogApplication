@@ -3,7 +3,8 @@
 {% block start %}
 
 <div class="container">
-    <form method="post" class="mt-5 pt-5 mb-5 pb-5">
+    <form method="post" class="mt-5 pt-5 mb-5 pb-5" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="row">
             <div class="col-md-12">
                 <label>Enter blog title</label>
@@ -14,7 +15,7 @@
                 {{form.as_p}}
             </div>
             <div class="col-md-12">
-                <input type="file" class="form-control">
+                <input type="file" name="image" class="form-control">
             </div>
         </div>
         <button type="submit" class="btn btn-primary mt-4">Create Blog</button>
