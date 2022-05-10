@@ -4,10 +4,14 @@ from django.shortcuts import render, redirect
 from .form import *
 
 def home(request):
-    return render(request, 'home.html')
+    context = {'blogs' : BlogModel.objects.all()}
+    return render(request, 'home.html', context)
 
 def login_view(request):
     return render(request, 'login.html')
+
+def blog_detail(request, slug):
+    return render(request, 'blog_detail.html')
 
 def add_blog(request):
     context = {'form' : BlogForm}
